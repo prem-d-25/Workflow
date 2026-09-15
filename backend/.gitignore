@@ -1,0 +1,18 @@
+# Environments
+.env
+.venv/
+env/
+venv/
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Distribution & build
+dist/
+build/
+*.egg-info/
