@@ -1,13 +1,32 @@
-# Environments
-.env
-.venv/
-node_modules/
-dist/
-
-# Python cache
+# Python & uv
 __pycache__/
 *.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
 
-# OS files
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Node / Frontend
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database & SQLite
+*.db
+*.sqlite3
+
+# IDE & OS
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
