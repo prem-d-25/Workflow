@@ -91,6 +91,12 @@ Rules:
 - Every list/screen must handle three states: **loading, empty, error**.
 - No `any` in TypeScript. No inline magic strings for roles or statuses: use constants.
 - Access token lives in memory (Zustand), never localStorage. The refresh token is an httpOnly cookie set by the backend.
+- Before creating any component, check src/components/ui and src/components/common
+  for one that already does the job. Reuse it.
+- shadcn components must be added with `npx shadcn@latest add <name>`, never
+  hand-written. Restyle them through the design tokens afterward.
+- Do not create new shared components unless the task asks for them. If you
+  think one is needed, ask first and say why.
 
 ## 6. UI rules
 
