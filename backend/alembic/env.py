@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.config import settings
 from app.core.database import Base
+import app.models  # noqa: F401 — registers all models with Base.metadata
 
 config = context.config
 

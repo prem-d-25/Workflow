@@ -14,9 +14,9 @@ Opus 4.6, Sonnet 4.6 and GPT-OSS are available in Antigravity only until **Nov 2
 - [x] Frontend calls `/api/health` and shows the result (proves the connection and CORS work)
 
 ## Phase 2 — Database models and migration (Opus)
-- [ ] All models from `ARCHITECTURE.md` section 3
-- [ ] First Alembic migration, including pgvector column and HNSW index
-- [ ] Verify the tables in pgAdmin
+- [x] All models from `ARCHITECTURE.md` section 3
+- [x] First Alembic migration, including pgvector column and HNSW index
+- [x] Verify the tables in pgAdmin
 
 ## Phase 3 — Authentication (Opus)
 - [ ] Password hashing and JWT helpers (`core/security.py`)
