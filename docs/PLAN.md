@@ -19,9 +19,9 @@ Opus 4.6, Sonnet 4.6 and GPT-OSS are available in Antigravity only until **Nov 2
 - [x] Verify the tables in pgAdmin
 
 ## Phase 3 — Authentication (Opus)
-- [ ] Password hashing and JWT helpers (`core/security.py`)
-- [ ] Register company + owner
-- [ ] Login, refresh (cookie), logout, `/me`
+- [x] Password hashing and JWT helpers (`core/security.py`)
+- [x] Register company + owner
+- [x] Login, refresh (cookie), logout, `/me`
 - [ ] `get_current_user` and `require_roles` dependencies
 - [ ] Change password and `must_change_password` flag
 - [ ] Frontend: auth store, login and register pages, axios refresh interceptor
