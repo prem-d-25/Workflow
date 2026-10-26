@@ -36,7 +36,7 @@ Opus 4.6, Sonnet 4.6 and GPT-OSS are available in Antigravity only until **Nov 2
 - [x] User detail page: profile, leave balance, activate / deactivate (owner only)
 
 ## Phase 5 — Profile (Sonnet)
-- [ ] View and edit own profile (all roles)
+- [x] View and edit own profile (all roles)
 
 ## Phase 6 — Leave (Sonnet, use Opus if the approval rules get messy)
 - [ ] Apply for leave with balance validation

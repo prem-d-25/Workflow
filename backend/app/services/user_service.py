@@ -9,8 +9,9 @@ from sqlalchemy.orm import Session
 
 from app.core.constants import UserRole
 from app.core.security import hash_password
+from app.models.company import Company
 from app.models.user import User
-from app.schemas.user import CreateUserRequest
+from app.schemas.user import CreateUserRequest, ProfileResponse, ProfileUpdateRequest
 
 
 def generate_temporary_password(email: str) -> str:
@@ -160,10 +161,53 @@ def update_user_status(
     if user.role == UserRole.OWNER.value:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot change active status of an owner",
+            detail="Cannot change status of an owner",
         )
 
     user.is_active = is_active
     db.commit()
     db.refresh(user)
     return user
+
+
+def get_profile(db: Session, current_user: User) -> ProfileResponse:
+    """Retrieve the personal profile of the currently logged-in user."""
+    company = db.scalars(
+        select(Company).where(Company.id == current_user.company_id)
+    ).first()
+    company_name = company.name if company else ""
+
+    return ProfileResponse(
+        id=current_user.id,
+        email=current_user.email,
+        full_name=current_user.full_name,
+        role=current_user.role,
+        phone=current_user.phone,
+        date_of_birth=current_user.date_of_birth,
+        address=current_user.address,
+        designation=current_user.designation,
+        department=current_user.department,
+        joined_on=current_user.joined_on,
+        company_name=company_name,
+    )
+
+
+def update_profile(
+    db: Session,
+    current_user: User,
+    data: ProfileUpdateRequest,
+) -> ProfileResponse:
+    """Update profile details of the currently logged-in user."""
+    current_user.full_name = data.full_name
+    current_user.phone = data.phone
+    current_user.date_of_birth = data.date_of_birth
+    current_user.address = data.address
+    current_user.designation = data.designation
+    current_user.department = data.department
+    current_user.joined_on = data.joined_on
+
+    db.add(current_user)
+    db.commit()
+    db.refresh(current_user)
+
+    return get_profile(db, current_user)

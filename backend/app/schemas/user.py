@@ -98,3 +98,63 @@ class UserListResponse(BaseModel):
     total: int
     page: int
     page_size: int
+
+
+class ProfileResponse(BaseModel):
+    """Personal profile view of the authenticated user."""
+
+    id: uuid.UUID
+    email: EmailStr
+    full_name: str
+    role: str
+    phone: str | None = None
+    date_of_birth: date | None = None
+    address: str | None = None
+    designation: str | None = None
+    department: str | None = None
+    joined_on: date | None = None
+    company_name: str
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ProfileUpdateRequest(BaseModel):
+    """Payload for updating own profile."""
+
+    full_name: str = Field(..., min_length=1, max_length=100)
+    phone: str | None = Field(default=None, max_length=20)
+    date_of_birth: date | None = None
+    address: str | None = Field(default=None, max_length=255)
+    designation: str | None = Field(default=None, max_length=100)
+    department: str | None = Field(default=None, max_length=100)
+    joined_on: date | None = None
+
+    @field_validator("full_name")
+    @classmethod
+    def validate_full_name(cls, v: str) -> str:
+        stripped = v.strip()
+        if not stripped:
+            raise ValueError("Full name cannot be empty or whitespace only.")
+        return stripped
+
+    @field_validator("phone", "address", "designation", "department", mode="before")
+    @classmethod
+    def empty_string_to_null(cls, v: Any) -> Any:
+        if isinstance(v, str):
+            stripped = v.strip()
+            return stripped if stripped else None
+        return v
+
+    @field_validator("date_of_birth")
+    @classmethod
+    def validate_dob_in_past(cls, v: date | None) -> date | None:
+        if v is not None and v >= date.today():
+            raise ValueError("Date of birth must be in the past.")
+        return v
+
+    @field_validator("joined_on")
+    @classmethod
+    def validate_joined_not_future(cls, v: date | None) -> date | None:
+        if v is not None and v > date.today():
+            raise ValueError("Joined on date cannot be in the future.")
+        return v

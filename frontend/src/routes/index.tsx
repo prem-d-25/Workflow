@@ -10,6 +10,7 @@ import { ComingSoonPage } from "@/pages/ComingSoonPage"
 import { CompanyPage } from "@/pages/CompanyPage"
 import { EmployeesPage } from "@/pages/EmployeesPage"
 import { EmployeeDetailPage } from "@/pages/EmployeeDetailPage"
+import { ProfilePage } from "@/pages/ProfilePage"
 import { USER_ROLES } from "@/features/auth/types"
 
 export const router = createBrowserRouter([
@@ -46,7 +47,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/profile",
-            element: <ComingSoonPage title="Profile" />,
+            element: <ProfilePage />,
           },
           // HR and Owner only
           {

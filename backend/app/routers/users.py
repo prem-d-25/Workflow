@@ -7,11 +7,13 @@ from sqlalchemy.orm import Session
 
 from app.core.constants import UserRole
 from app.core.database import get_db
-from app.core.deps import require_roles
+from app.core.deps import get_current_user, require_roles
 from app.models.user import User
 from app.schemas.user import (
     CreateUserRequest,
     CreateUserResponse,
+    ProfileResponse,
+    ProfileUpdateRequest,
     UserDetailResponse,
     UserItemResponse,
     UserListResponse,
@@ -60,6 +62,25 @@ def list_users(
         page=page,
         page_size=page_size,
     )
+
+
+@router.get("/me/profile", response_model=ProfileResponse)
+def get_my_profile(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> ProfileResponse:
+    """Retrieve personal profile of the authenticated user (any role)."""
+    return user_service.get_profile(db, current_user)
+
+
+@router.put("/me/profile", response_model=ProfileResponse)
+def update_my_profile(
+    data: ProfileUpdateRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> ProfileResponse:
+    """Update personal profile of the authenticated user (any role)."""
+    return user_service.update_profile(db, current_user, data)
 
 
 @router.get("/{user_id}", response_model=UserDetailResponse)
