@@ -4,6 +4,7 @@ import uuid
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.core.constants import UserRole
@@ -71,6 +72,12 @@ def register_company_owner(
         db.add(owner)
         db.commit()
         db.refresh(owner)
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="A user with this email already exists",
+        )
     except Exception:
         db.rollback()
         raise
@@ -144,3 +151,28 @@ def refresh_access_token(
         token_type="bearer",
         user=UserResponse.model_validate(user),
     )
+
+
+def change_password(
+    db: Session,
+    user: User,
+    current_password: str,
+    new_password: str,
+) -> None:
+    """Verify current password, ensure new password is distinct, and update user password."""
+    if not verify_password(current_password, user.password_hash):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Current password is incorrect",
+        )
+
+    if current_password == new_password:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="New password cannot be the same as the current password",
+        )
+
+    user.password_hash = hash_password(new_password)
+    user.must_change_password = False
+    db.commit()
+    db.refresh(user)

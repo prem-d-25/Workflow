@@ -22,8 +22,8 @@ Opus 4.6, Sonnet 4.6 and GPT-OSS are available in Antigravity only until **Nov 2
 - [x] Password hashing and JWT helpers (`core/security.py`)
 - [x] Register company + owner
 - [x] Login, refresh (cookie), logout, `/me`
-- [ ] `get_current_user` and `require_roles` dependencies
-- [ ] Change password and `must_change_password` flag
+- [x] `get_current_user` and `require_roles` dependencies
+- [x] Change password and `must_change_password` flag
 - [ ] Frontend: auth store, login and register pages, axios refresh interceptor
 - [ ] Frontend: protected routes, role routes, forced change-password dialog
 - [ ] App shell: sidebar and topbar per role

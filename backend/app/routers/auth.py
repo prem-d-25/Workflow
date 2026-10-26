@@ -7,7 +7,13 @@ from app.core.config import settings
 from app.core.database import get_db
 from app.core.deps import get_current_user
 from app.models.user import User
-from app.schemas.auth import LoginRequest, RegisterRequest, TokenResponse, UserResponse
+from app.schemas.auth import (
+    ChangePasswordRequest,
+    LoginRequest,
+    RegisterRequest,
+    TokenResponse,
+    UserResponse,
+)
 from app.services import auth_service
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -89,3 +95,19 @@ def get_me(
 ) -> UserResponse:
     """Fetch the profile of the currently logged in user."""
     return UserResponse.model_validate(current_user)
+
+
+@router.post("/change-password")
+def change_password(
+    data: ChangePasswordRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> dict[str, str]:
+    """Change the password for the currently logged in user."""
+    auth_service.change_password(
+        db=db,
+        user=current_user,
+        current_password=data.current_password,
+        new_password=data.new_password,
+    )
+    return {"message": "Password changed successfully"}

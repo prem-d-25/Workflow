@@ -67,6 +67,7 @@ Deleting a policy document deletes its chunks (`ON DELETE CASCADE`).
 - **Change password** (`POST /api/auth/change-password`): needs the current password; sets `must_change_password = false`.
 - Frontend: axios interceptor attaches the access token. On 401 it calls refresh once, then retries. If refresh fails, it logs out. While `mustChangePassword` is true the app shows a non-closable change-password dialog.
 - Access token payload: `sub` (user id), `company_id`, `role`, `exp`. The backend still loads the user from the DB to check `is_active`.
+- `require_roles` checks both role authorization and `must_change_password` (returning 403 "Password change required" if true); `get_current_user` does not enforce this so `/me` and `/change-password` stay accessible while a password change is pending.
 
 ## 6. API overview (all under `/api`)
 

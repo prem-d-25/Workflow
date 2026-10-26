@@ -58,3 +58,25 @@ def get_current_user(
         )
 
     return user
+
+
+def require_roles(*roles: str):
+    """Dependency factory that verifies the current user has one of the allowed roles
+    and has updated their default password.
+    """
+    allowed_roles = {r.value if hasattr(r, "value") else str(r) for r in roles}
+
+    def role_checker(current_user: User = Depends(get_current_user)) -> User:
+        if current_user.must_change_password:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Password change required",
+            )
+        if current_user.role not in allowed_roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="You do not have permission",
+            )
+        return current_user
+
+    return role_checker
