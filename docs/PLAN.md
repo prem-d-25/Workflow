@@ -25,8 +25,8 @@ Opus 4.6, Sonnet 4.6 and GPT-OSS are available in Antigravity only until **Nov 2
 - [x] `get_current_user` and `require_roles` dependencies
 - [x] Change password and `must_change_password` flag
 - [x] Frontend: auth store, login and register pages, axios refresh interceptor
-- [ ] Frontend: protected routes, role routes, forced change-password dialog
-- [ ] App shell: sidebar and topbar per role
+- [x] Frontend: protected routes, role routes, forced change-password dialog
+- [x] App shell: sidebar and topbar per role
 
 ## Phase 4 — Owner: company, leave types, users (Sonnet)
 - [ ] Company details view and edit

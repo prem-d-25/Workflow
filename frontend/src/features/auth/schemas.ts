@@ -44,3 +44,27 @@ export const registerSchema = z
   })
 
 export type RegisterFormData = z.infer<typeof registerSchema>
+
+export const changePasswordSchema = z
+  .object({
+    current_password: z.string().min(1, "Current password is required"),
+    new_password: z
+      .string()
+      .min(1, "New password is required")
+      .min(8, "Password must be at least 8 characters")
+      .refine(
+        (val) => new TextEncoder().encode(val).length <= 72,
+        "Password cannot exceed 72 bytes"
+      ),
+    confirm_password: z.string().min(1, "Please confirm your new password"),
+  })
+  .refine((data) => data.new_password !== data.current_password, {
+    message: "New password must be different from current password",
+    path: ["new_password"],
+  })
+  .refine((data) => data.new_password === data.confirm_password, {
+    message: "Passwords do not match",
+    path: ["confirm_password"],
+  })
+
+export type ChangePasswordFormData = z.infer<typeof changePasswordSchema>
