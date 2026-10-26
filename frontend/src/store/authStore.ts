@@ -1,27 +1,36 @@
 import { create } from "zustand"
-
-export interface User {
-  id: string
-  companyId: string
-  email: string
-  fullName: string
-  role: "owner" | "hr" | "employee"
-  isActive: boolean
-}
+import type { User, AuthStatus } from "@/features/auth/types"
 
 interface AuthState {
   user: User | null
   accessToken: string | null
-  mustChangePassword: boolean
-  setAuth: (user: User, accessToken: string, mustChangePassword?: boolean) => void
-  clearAuth: () => void
+  status: AuthStatus
+  setSession: (user: User, token: string) => void
+  setAccessToken: (token: string) => void
+  clearSession: () => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   accessToken: null,
-  mustChangePassword: false,
-  setAuth: (user, accessToken, mustChangePassword = false) =>
-    set({ user, accessToken, mustChangePassword }),
-  clearAuth: () => set({ user: null, accessToken: null, mustChangePassword: false }),
+  status: "loading",
+  setSession: (user, token) =>
+    set({
+      user,
+      accessToken: token,
+      status: "authenticated",
+    }),
+  setAccessToken: (token) =>
+    set({
+      accessToken: token,
+    }),
+  clearSession: () =>
+    set({
+      user: null,
+      accessToken: null,
+      status: "unauthenticated",
+    }),
 }))
+
+export const useMustChangePassword = () =>
+  useAuthStore((state) => state.user?.must_change_password ?? false)
