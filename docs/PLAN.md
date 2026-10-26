@@ -29,10 +29,10 @@ Opus 4.6, Sonnet 4.6 and GPT-OSS are available in Antigravity only until **Nov 2
 - [x] App shell: sidebar and topbar per role
 
 ## Phase 4 — Owner: company, leave types, users (Sonnet)
-- [ ] Company details view and edit
-- [ ] Leave types: add, edit, delete
-- [ ] Add HR / Employee (default password rule)
-- [ ] Users list (owner and HR), with role filter and search
+- [x] Company details view and edit
+- [x] Leave types: add, edit, delete
+- [x] Add HR / Employee (default password rule)
+- [x] Users list (owner and HR), with role filter and search
 - [ ] User detail page: profile, leave balance, activate / deactivate (owner only)
 
 ## Phase 5 — Profile (Sonnet)
