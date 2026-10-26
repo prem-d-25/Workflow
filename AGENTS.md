@@ -21,6 +21,9 @@ The developer is learning and must be able to explain every line in an interview
 - AI: LangChain, Groq (chat, model `llama-3.3-70b-versatile`), Gemini `gemini-embedding-001` at 768 dimensions (embeddings), FastEmbed as an optional second provider
 - Frontend: React + Vite + TypeScript, React Router, Axios, Zod, Zustand, React Hook Form, Tailwind CSS, shadcn/ui
 - Auth: JWT access token (short) + refresh token (httpOnly cookie)
+- Do not upgrade or install a different major version of any package in the
+  fixed stack (zod, @hookform/resolvers, react-router, tailwind, etc.) without
+  asking me first. If a package needs a specific version of another, say so.
 
 ## 2. Backend structure
 
