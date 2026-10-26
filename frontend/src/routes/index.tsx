@@ -7,6 +7,9 @@ import { LoginPage } from "@/pages/LoginPage"
 import { RegisterPage } from "@/pages/RegisterPage"
 import { DashboardPage } from "@/pages/DashboardPage"
 import { ComingSoonPage } from "@/pages/ComingSoonPage"
+import { CompanyPage } from "@/pages/CompanyPage"
+import { EmployeesPage } from "@/pages/EmployeesPage"
+import { EmployeeDetailPage } from "@/pages/EmployeeDetailPage"
 import { USER_ROLES } from "@/features/auth/types"
 
 export const router = createBrowserRouter([
@@ -51,7 +54,11 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: "/employees",
-                element: <ComingSoonPage title="Employees" />,
+                element: <EmployeesPage />,
+              },
+              {
+                path: "/employees/:id",
+                element: <EmployeeDetailPage />,
               },
             ],
           },
@@ -65,7 +72,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: "/company",
-                element: <ComingSoonPage title="Company" />,
+                element: <CompanyPage />,
               },
             ],
           },
